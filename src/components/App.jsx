@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Options from "../components/Options/Options.jsx";
+import Feedback from "../components/Feedback/Feedback.jsx";
+import Notification from "../components/Notification/Notification.jsx";
 import "./App.css";
 
 const App = () => {
@@ -16,6 +18,9 @@ const App = () => {
     }));
   };
 
+  // Обчислюємо загальну кількість відгуків
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
   return (
     <div>
       <h1>Slip Happens Cafe</h1>
@@ -24,12 +29,11 @@ const App = () => {
         options below.
       </p>
       <Options updateFeedback={updateFeedback} />
-      <div>
-        <h2>Statistics</h2>
-        <p>Good: {feedback.good}</p>
-        <p>Neutral: {feedback.neutral}</p>
-        <p>Bad: {feedback.bad}</p>
-      </div>
+      {totalFeedback > 0 ? (
+        <Feedback feedback={feedback} total={totalFeedback} />
+      ) : (
+        <Notification message="No feedback given yet" />
+      )}
     </div>
   );
 };
