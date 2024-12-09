@@ -1,25 +1,18 @@
 import PropTypes from "prop-types";
 import styles from "./Options.module.css";
 
-const Options = ({ feedbackTypes, onLeaveFeedback }) => {
+const Options = ({ updateFeedback }) => {
   return (
     <div className={styles.options}>
-      {feedbackTypes.map((type) => (
-        <button
-          key={type}
-          className={styles.button}
-          onClick={() => onLeaveFeedback(type)}
-        >
-          {type.charAt(0).toUpperCase() + type.slice(1)}
-        </button>
-      ))}
+      <button onClick={() => updateFeedback("good")}>Good</button>
+      <button onClick={() => updateFeedback("neutral")}>Neutral</button>
+      <button onClick={() => updateFeedback("bad")}>Bad</button>
     </div>
   );
 };
 
 Options.propTypes = {
-  feedbackTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onLeaveFeedback: PropTypes.func.isRequired,
+  updateFeedback: PropTypes.func.isRequired,
 };
 
 export default Options;

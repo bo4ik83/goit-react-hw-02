@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Feedback from "../components/Feedback/Feedback.jsx";
 import Options from "../components/Options/Options.jsx";
 import "./App.css";
 
@@ -10,10 +9,10 @@ const App = () => {
     bad: 0,
   });
 
-  const handleFeedback = (type) => {
+  const updateFeedback = (feedbackType) => {
     setFeedback((prevState) => ({
       ...prevState,
-      [type]: prevState[type] + 1,
+      [feedbackType]: prevState[feedbackType] + 1,
     }));
   };
 
@@ -24,11 +23,13 @@ const App = () => {
         Please leave your feedback about our service by selecting one of the
         options below.
       </p>
-      <Options
-        feedbackTypes={Object.keys(feedback)}
-        onLeaveFeedback={handleFeedback}
-      />
-      <Feedback feedback={feedback} />
+      <Options updateFeedback={updateFeedback} />
+      <div>
+        <h2>Statistics</h2>
+        <p>Good: {feedback.good}</p>
+        <p>Neutral: {feedback.neutral}</p>
+        <p>Bad: {feedback.bad}</p>
+      </div>
     </div>
   );
 };
