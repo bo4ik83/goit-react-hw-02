@@ -4,31 +4,38 @@ import Feedback from "../components/Feedback/Feedback.jsx";
 import Notification from "../components/Notification/Notification.jsx";
 import "./App.css";
 
-const App = () => {
+function App() {
   const [feedback, setFeedback] = useState({
     good: 0,
     neutral: 0,
     bad: 0,
   });
 
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
   const updateFeedback = (feedbackType) => {
-    setFeedback((prevState) => ({
-      ...prevState,
-      [feedbackType]: prevState[feedbackType] + 1,
+    setFeedback((prevFeedback) => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
     }));
   };
 
-  // Обчислюємо загальну кількість відгуків
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const resetFeedback = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
 
   return (
-    <div>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>Slip Happens Cafe</h1>
       <p>
         Please leave your feedback about our service by selecting one of the
         options below.
       </p>
-      <Options updateFeedback={updateFeedback} />
+      <Options
+        totalFeedback={totalFeedback}
+        onUpdateFeedback={updateFeedback}
+        onResetFeedback={resetFeedback}
+      />
       {totalFeedback > 0 ? (
         <Feedback feedback={feedback} total={totalFeedback} />
       ) : (
@@ -36,6 +43,6 @@ const App = () => {
       )}
     </div>
   );
-};
+}
 
 export default App;
